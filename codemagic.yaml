@@ -1,20 +1,24 @@
 workflows:
   android-workflow:
     name: Android Build
-    
+
     environment:
       flutter: stable
-    
+
     scripts:
       - name: Extract android.zip
-        script: unzip -o android.zip
-      
+        script: |
+          unzip -o android.zip
+          if [ -d "android/android" ]; then
+            mv android/android/* android/
+            rmdir android/android
+          fi
+
       - name: Get Flutter packages
         script: flutter pub get
-      
+
       - name: Build APK
         script: flutter build apk --release
-    
+
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
-  
