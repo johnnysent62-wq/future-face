@@ -7,12 +7,10 @@ workflows:
 
     scripts:
       - name: Extract android.zip
-        script: |
-          unzip -o android.zip
-          if [ -d "android/android" ]; then
-            mv android/android/* android/
-            rmdir android/android
-          fi
+  script: |
+    unzip -o android.zip -d temp_extract
+    mv temp_extract/android ./android
+    rm -rf temp_extract
 
       - name: Get Flutter packages
         script: flutter pub get
