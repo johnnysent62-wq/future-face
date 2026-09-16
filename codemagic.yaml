@@ -6,11 +6,13 @@ workflows:
       flutter: stable
 
     scripts:
-      - name: Extract android.zip
+      - name: Extract android_files.zip
         script: |
-          unzip -o android.zip -d temp_extract
-          mv temp_extract/android ./android
-          rm -rf temp_extract
+          unzip -o android_files.zip
+          if [ -d "android/android" ]; then
+            mv android/android/* android/
+            rmdir android/android
+          fi
 
       - name: Get Flutter packages
         script: flutter pub get
